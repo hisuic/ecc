@@ -4,10 +4,11 @@
 
 // import libraries
 #include <stdlib.h>
+#include <stdint.h>
 #include <time.h>
 
 // prototype declaration
-// セキュアな乱数を生成する関数（実装に応じて、より高度な乱数生成手法を利用）
+// セキュアな乱数を生成する関数
 uint32_t secure_rand(void);
 
 // エラーメッセージの出力関数
