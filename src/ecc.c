@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "ecc.h"
 #include "fp.h"
 
@@ -17,14 +18,25 @@ EC_Point ec_point_add(EC_Point P, EC_Point Q, fp_t a, fp_t p) {
     fp_t lambda;
     if (P.x == Q.x && P.y == Q.y) {
         // 点の倍加の場合
-        // λ = (3*x1^2 + a) / (2*y1) mod p
-        lambda = fp_mul(3, fp_mul(P.x, P.x, p), p);
-        lambda = fp_add(lambda, a, p);
-        lambda = fp_mul(lambda, fp_inv(fp_mul(2, P.y, p), p), p);
+        // // λ = (3*x1^2 + a) / (2*y1) mod p
+        // lambda = fp_mul(3, fp_mul(P.x, P.x, p), p);
+        // fprintf(stderr, "%d\n", lambda);
+        // lambda = fp_add(lambda, a, p);
+        // fprintf(stderr, "%d\n", lambda);
+        // lambda = fp_mul(lambda, fp_inv(fp_mul(2, P.y, p), p), p);
+        // fprintf(stderr, "%d\n", lambda);
+        
+        lambda = (3 * P.x * P.x + a) % p;
+        // fprintf(stderr, "%d\n", lambda);
+        int inverse = mod_inverse(2, p);
+        // fprintf(stderr, "%d\n", inverse);
+        lambda = (lambda * inverse) % p;
+        // fprintf(stderr, "lambda (final) = %d\n", lambda);
     } else {
         // 通常の加算の場合
         // λ = (y2 - y1) / (x2 - x1) mod p
         lambda = fp_mul(fp_sub(Q.y, P.y, p), fp_inv(fp_sub(Q.x, P.x, p), p), p);
+        // fprintf(stderr, "%d\n", lambda);
     }
     
     // x3 = λ^2 - x1 - x2 mod p

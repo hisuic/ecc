@@ -35,6 +35,7 @@ fp_t fp_inv(fp_t a, fp_t p) {
     if (t < 0) {
         t += p;
     }
+    fprintf(stderr, "inverse: %d\n", t);
     return t;
 }
 

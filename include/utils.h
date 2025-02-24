@@ -14,5 +14,8 @@ uint32_t secure_rand(void);
 // エラーメッセージの出力関数
 void print_error(const char* msg);
 
+// calculate inverse
+int mod_inverse(int a, int m);
+
 // finish include guard
 #endif  // UTILS_H
